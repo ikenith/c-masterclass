@@ -70,47 +70,75 @@
     </div>
   </header>
 
+  <!-- Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+  <!-- Sidebar / Drawer: Course Syllabus & Selection -->
+  <aside id="syllabus-sidebar" class="syllabus-sidebar" aria-label="Course Selection Menu">
+    <div class="sidebar-header">
+      <div class="sidebar-header-branding">
+        <div class="sidebar-brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="sidebar-brand-titles">
+          <h3>Course Curriculum</h3>
+          <span class="sidebar-brand-sub">Units 1 &amp; 2 &bull; 11 Modules (162 Slides)</span>
+        </div>
+      </div>
+      <button id="sidebar-close-btn" class="icon-btn small" aria-label="Close Course Menu" title="Close Menu (Esc)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Compact Course Overview Banner -->
+    <div class="syllabus-meta-card">
+      <div class="meta-instructor-row">
+        <div class="meta-instructor-avatar">
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
+        <div class="meta-instructor-details">
+          <span class="meta-instructor-name">Prof. Uday Kumar M</span>
+          <span class="meta-dept-name">Dept. of Computer Science &amp; Engineering</span>
+        </div>
+      </div>
+      <div class="syllabus-drawer-progress">
+        <div class="drawer-progress-header">
+          <span>Course Progress</span>
+          <span id="drawer-progress-percent">0%</span>
+        </div>
+        <div class="drawer-progress-bar">
+          <div id="drawer-progress-fill" class="drawer-progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unit Filter Tabs -->
+    <div class="syllabus-filter-wrapper">
+      <div class="syllabus-filter-tabs" role="tablist" aria-label="Filter Modules by Unit">
+        <button class="syllabus-filter-btn active" data-filter="all" role="tab" aria-selected="true">All (11)</button>
+        <button class="syllabus-filter-btn" data-filter="unit1" role="tab" aria-selected="false">Unit 1: Computing (4)</button>
+        <button class="syllabus-filter-btn" data-filter="unit2" role="tab" aria-selected="false">Unit 2: C Syntax (7)</button>
+      </div>
+    </div>
+
+    <!-- Scrollable Module Selection List -->
+    <div class="syllabus-list" id="syllabus-nav-list" role="list">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="footer-progress-label">
+        <i class="fa-solid fa-circle-check"></i>
+        <span><strong id="sidebar-completed-count">0</strong> of 11 Completed</span>
+      </div>
+      <button id="reset-progress-btn" class="sidebar-reset-btn" title="Reset Course Progress">
+        <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+      </button>
+    </div>
+  </aside>
+
   <!-- Main Application Container -->
   <div class="app-layout">
-    
-    <!-- Sidebar / Drawer: Course Syllabus -->
-    <aside id="syllabus-sidebar" class="syllabus-sidebar">
-      <div class="sidebar-header">
-        <h3><i class="fa-solid fa-book-open"></i> Course Syllabus</h3>
-        <button id="sidebar-close-btn" class="icon-btn small" aria-label="Close Syllabus">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="syllabus-meta-card">
-        <div class="teacher-badge">
-          <div class="teacher-avatar">
-            <i class="fa-solid fa-user-tie"></i>
-          </div>
-          <div class="teacher-info">
-            <div class="teacher-name">Prof. Uday Kumar M</div>
-            <div class="teacher-role">Department of Computer Science</div>
-          </div>
-        </div>
-        <p class="syllabus-summary">Comprehensive curriculum covering computer architecture, number systems, algorithms, compilation pipelines, memory models, and C syntax across Units 1 & 2.</p>
-        <div class="syllabus-stats">
-          <span><i class="fa-solid fa-layer-group"></i> Units 1 & 2</span>
-          <span><i class="fa-solid fa-clock"></i> 11 Modules</span>
-          <span><i class="fa-solid fa-circle-question"></i> 72 MCQs</span>
-          <span><i class="fa-solid fa-file-powerpoint"></i> 162 Slides</span>
-        </div>
-      </div>
-
-      <div class="syllabus-list" id="syllabus-nav-list">
-        <!-- Injected via JavaScript -->
-      </div>
-
-      <div class="sidebar-footer">
-        <button id="reset-progress-btn" class="secondary-btn small full-width">
-          <i class="fa-solid fa-arrow-rotate-left"></i> Reset Progress
-        </button>
-      </div>
-    </aside>
 
     <!-- Main Workspace Content -->
     <main class="main-content">

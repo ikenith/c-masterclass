@@ -680,7 +680,9 @@ class CourseEngine {
     this.updateOverallProgress();
     if (hash === 'tools') this.openModal('tools-modal');
     if (hash === 'exam') this.openExamModal();
-    if (hash === 'sidebar') this.sidebar.classList.add('open');
+    if (hash === 'sidebar' || urlParams.get('sidebar') === 'true') {
+      setTimeout(() => this.openSidebar(), 100);
+    }
 
     if (urlParams.get('modal') === 'tools' || hash === 'tools') {
       setTimeout(() => this.openModal('tools-modal'), 100);
@@ -704,7 +706,56 @@ class CourseEngine {
     this.prevStepBtn = document.getElementById('prev-step-btn');
     this.nextStepBtn = document.getElementById('next-step-btn');
     this.sidebar = document.getElementById('syllabus-sidebar');
+    this.sidebarBackdrop = document.getElementById('sidebar-backdrop');
     this.syllabusList = document.getElementById('syllabus-nav-list');
+    this.drawerProgressFill = document.getElementById('drawer-progress-fill');
+    this.drawerProgressPercent = document.getElementById('drawer-progress-percent');
+    this.sidebarCompletedCount = document.getElementById('sidebar-completed-count');
+    this.activeFilter = 'all';
+  }
+
+  openSidebar() {
+    this.sidebar?.classList.add('open');
+    this.sidebarBackdrop?.classList.add('active');
+    document.body.classList.add('sidebar-open');
+  }
+
+  closeSidebar() {
+    this.sidebar?.classList.remove('open');
+    this.sidebarBackdrop?.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+  }
+
+  toggleSidebar() {
+    if (this.sidebar?.classList.contains('open')) {
+      this.closeSidebar();
+    } else {
+      this.openSidebar();
+    }
+  }
+
+  updateDrawerProgress() {
+    const total = this.modules.length;
+    const completed = this.completedModules.size;
+    const pct = Math.round((completed / total) * 100);
+    if (this.drawerProgressFill) this.drawerProgressFill.style.width = `${pct}%`;
+    if (this.drawerProgressPercent) this.drawerProgressPercent.textContent = `${pct}%`;
+    if (this.sidebarCompletedCount) this.sidebarCompletedCount.textContent = completed;
+  }
+
+  filterSyllabusList(filter) {
+    const items = this.syllabusList.querySelectorAll('.syllabus-item');
+    const headers = this.syllabusList.querySelectorAll('.syllabus-unit-header');
+
+    headers.forEach(h => {
+      const grp = h.getAttribute('data-unit-group');
+      h.style.display = (filter === 'all' || filter === grp) ? 'block' : 'none';
+    });
+
+    items.forEach(item => {
+      const grp = item.getAttribute('data-unit-group');
+      item.style.display = (filter === 'all' || filter === grp) ? 'flex' : 'none';
+    });
   }
 
   initTheme() {
@@ -764,48 +815,115 @@ class CourseEngine {
 
   initSyllabus() {
     this.syllabusList.innerHTML = '';
+    
+    // Unit 1 Header
+    const u1Header = document.createElement('div');
+    u1Header.className = 'syllabus-unit-header';
+    u1Header.setAttribute('data-unit-group', 'unit1');
+    u1Header.innerHTML = `
+      <div class="unit-badge-row">
+        <span class="unit-pill">UNIT 1</span>
+        <span class="unit-count-meta">Modules 1–4 &bull; Slides 1–45</span>
+      </div>
+      <div class="unit-title">Introduction to Computing &amp; Architecture</div>
+    `;
+    this.syllabusList.appendChild(u1Header);
+
     this.modules.forEach((mod, idx) => {
-      if (idx === 0) {
-        const div1 = document.createElement('div');
-        div1.className = 'syllabus-unit-divider';
-        div1.innerHTML = '<span class="unit-tag">UNIT 1</span> <span>Introduction to Computing (Slides 1–45)</span>';
-        this.syllabusList.appendChild(div1);
-      } else if (idx === 4) {
-        const div2 = document.createElement('div');
-        div2.className = 'syllabus-unit-divider';
-        div2.innerHTML = '<span class="unit-tag">UNIT 2</span> <span>C Programming Fundamentals (Slides 46–162)</span>';
-        this.syllabusList.appendChild(div2);
+      if (idx === 4) {
+        // Unit 2 Header
+        const u2Header = document.createElement('div');
+        u2Header.className = 'syllabus-unit-header';
+        u2Header.setAttribute('data-unit-group', 'unit2');
+        u2Header.innerHTML = `
+          <div class="unit-badge-row">
+            <span class="unit-pill">UNIT 2</span>
+            <span class="unit-count-meta">Modules 5–11 &bull; Slides 46–162</span>
+          </div>
+          <div class="unit-title">C Programming Fundamentals</div>
+        `;
+        this.syllabusList.appendChild(u2Header);
       }
 
+      const unitGroup = idx < 4 ? 'unit1' : 'unit2';
+      const isCompleted = this.completedModules.has(mod.id);
+      const isActive = idx === this.currentModuleIndex;
+      const padNum = String(mod.num).padStart(2, '0');
+      const mcqCount = mod.quiz ? mod.quiz.length : 5;
+
       const item = document.createElement('button');
-      item.className = `syllabus-item ${idx === this.currentModuleIndex ? 'active' : ''} ${this.completedModules.has(mod.id) ? 'completed' : ''}`;
+      item.className = `syllabus-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+      item.setAttribute('data-module-id', mod.id);
+      item.setAttribute('data-unit-group', unitGroup);
+      item.setAttribute('data-index', idx);
+      item.setAttribute('role', 'listitem');
+
       item.innerHTML = `
-        <div class="item-icon">${this.completedModules.has(mod.id) ? '<i class="fa-solid fa-check"></i>' : mod.num}</div>
-        <div class="item-content">
+        <div class="item-badge-wrap">
+          <div class="item-number-box">
+            ${isCompleted ? '<i class="fa-solid fa-check"></i>' : padNum}
+          </div>
+        </div>
+        <div class="item-details">
           <div class="item-title">${mod.title}</div>
-          <div class="item-subtitle">${mod.slides} &bull; ${mod.time}</div>
+          <div class="item-chips-row">
+            <span class="item-chip"><i class="fa-regular fa-clone"></i> ${mod.slides}</span>
+            <span class="item-chip"><i class="fa-regular fa-clock"></i> ${mod.time}</span>
+            <span class="item-chip"><i class="fa-solid fa-circle-question"></i> ${mcqCount} MCQs</span>
+          </div>
+        </div>
+        <div class="item-action-col">
+          ${isActive 
+            ? '<span class="item-status-tag current">ACTIVE</span>' 
+            : (isCompleted 
+                ? '<span class="item-status-tag completed">DONE</span>' 
+                : '<i class="fa-solid fa-chevron-right item-chevron"></i>')}
         </div>
       `;
+
       item.addEventListener('click', () => {
         this.jumpToModule(idx);
-        this.sidebar.classList.remove('open');
+        this.closeSidebar();
       });
+
       this.syllabusList.appendChild(item);
     });
+
+    this.updateDrawerProgress();
   }
 
   updateSyllabusActiveState() {
     const items = this.syllabusList.querySelectorAll('.syllabus-item');
     items.forEach((item, idx) => {
-      item.classList.toggle('active', idx === this.currentModuleIndex);
-      item.classList.toggle('completed', this.completedModules.has(this.modules[idx].id));
-      const icon = item.querySelector('.item-icon');
-      if (icon) {
-        icon.innerHTML = this.completedModules.has(this.modules[idx].id) 
-          ? '<i class="fa-solid fa-check"></i>' 
-          : this.modules[idx].num;
+      const isCompleted = this.completedModules.has(this.modules[idx].id);
+      const isActive = idx === this.currentModuleIndex;
+      const padNum = String(this.modules[idx].num).padStart(2, '0');
+
+      item.classList.toggle('active', isActive);
+      item.classList.toggle('completed', isCompleted);
+
+      const numBox = item.querySelector('.item-number-box');
+      if (numBox) {
+        numBox.innerHTML = isCompleted ? '<i class="fa-solid fa-check"></i>' : padNum;
+      }
+
+      const actionCol = item.querySelector('.item-action-col');
+      if (actionCol) {
+        if (isActive) {
+          actionCol.innerHTML = '<span class="item-status-tag current">ACTIVE</span>';
+        } else if (isCompleted) {
+          actionCol.innerHTML = '<span class="item-status-tag completed">DONE</span>';
+        } else {
+          actionCol.innerHTML = '<i class="fa-solid fa-chevron-right item-chevron"></i>';
+        }
+      }
+
+      if (isActive) {
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
+
+    this.updateDrawerProgress();
   }
 
   jumpToModule(index, updateHash = true) {
@@ -1035,6 +1153,7 @@ class CourseEngine {
 
     this.progressText.textContent = `${pct}%`;
     this.progressFill.style.width = `${pct}%`;
+    this.updateDrawerProgress();
   }
 
   initToolsLab() {
@@ -1156,8 +1275,24 @@ class CourseEngine {
 
   initEvents() {
     document.getElementById('theme-toggle-btn')?.addEventListener('click', () => this.toggleTheme());
-    document.getElementById('syllabus-toggle-btn')?.addEventListener('click', () => this.sidebar.classList.toggle('open'));
-    document.getElementById('sidebar-close-btn')?.addEventListener('click', () => this.sidebar.classList.remove('open'));
+    document.getElementById('syllabus-toggle-btn')?.addEventListener('click', () => this.toggleSidebar());
+    document.getElementById('sidebar-close-btn')?.addEventListener('click', () => this.closeSidebar());
+    this.sidebarBackdrop?.addEventListener('click', () => this.closeSidebar());
+
+    // Unit Filter Tabs
+    document.querySelectorAll('.syllabus-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.syllabus-filter-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        this.activeFilter = btn.getAttribute('data-filter');
+        this.filterSyllabusList(this.activeFilter);
+      });
+    });
+
     document.getElementById('tools-modal-btn')?.addEventListener('click', () => this.openModal('tools-modal'));
     document.getElementById('exam-jump-btn')?.addEventListener('click', () => this.openExamModal());
 
@@ -1206,6 +1341,11 @@ class CourseEngine {
 
     window.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'Escape') {
+        this.closeSidebar();
+        this.closeModal('tools-modal');
+        this.closeModal('exam-modal');
+      }
       if (e.key === 'ArrowLeft') this.jumpToModule(this.currentModuleIndex - 1);
       if (e.key === 'ArrowRight') this.jumpToModule(this.currentModuleIndex + 1);
     });
@@ -1217,7 +1357,7 @@ class CourseEngine {
       } else if (h === 'exam') {
         this.openExamModal();
       } else if (h === 'sidebar') {
-        this.sidebar.classList.add('open');
+        this.openSidebar();
       } else {
         const foundIdx = this.modules.findIndex(m => m.id.toLowerCase() === h || `m${m.num}`.toLowerCase() === h || String(m.num) === h);
         if (foundIdx !== -1 && foundIdx !== this.currentModuleIndex) {
@@ -1479,7 +1619,7 @@ window.updateBitwiseLiveCalc = function() {
 // Boot Engine on DOM Ready
 let engine;
 document.addEventListener('DOMContentLoaded', () => {
-  engine = new CourseEngine();
+  window.engine = engine = new CourseEngine();
 });
 """
 
