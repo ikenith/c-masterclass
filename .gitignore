@@ -1,0 +1,23 @@
+# Compiled binaries
+mem1
+mem2
+mem3
+test_escape
+test_examples
+test_func
+test_practice
+test_switch
+*.o
+*.s
+*.i
+*.out
+
+# Screenshot and temp artifacts
+*.png
+capture_states.js
+rendered.html
+
+# Caches
+__pycache__/
+*.pyc
+.DS_Store

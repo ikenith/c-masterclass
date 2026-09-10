@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C Programming Masterclass: Units 1 & 2 — Overview of Computer Organization & Programming Fundamentals</title>
+  <meta name="description" content="Comprehensive, interactive, mobile-friendly mastery platform for Unit 1 & Unit 2 C Programming curriculum with roadmaps, deep-dive explanations, tools lab, and practice quizzes.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+
+  <!-- Google Fonts & Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- KaTeX for crisp mathematical typography -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Highlight.js for C code syntax illumination -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
+
+  <!-- Main Responsive Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress-bar" aria-hidden="true"></div>
+
+  <!-- Top Global Header -->
+  <header class="site-header">
+    <div class="header-left">
+      <button id="syllabus-toggle-btn" class="icon-btn" aria-label="Toggle Syllabus" title="Course Roadmap">
+        <i class="fa-solid fa-bars-staggered"></i>
+      </button>
+      <div class="brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">C Masterclass</span>
+          <span class="brand-subtitle">Units 1 & 2: Computer Organization & C Fundamentals</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="course-overall-progress">
+        <div class="progress-info">
+          <span class="progress-label"><i class="fa-solid fa-chart-line"></i> Learning Progress</span>
+          <span id="overall-progress-text" class="progress-percentage">0%</span>
+        </div>
+        <div class="progress-track">
+          <div id="overall-progress-fill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button id="tools-modal-btn" class="header-action-btn" title="Open Interactive Tools Lab">
+        <i class="fa-solid fa-microchip"></i>
+        <span class="btn-text">Tools Lab</span>
+      </button>
+      <button id="exam-jump-btn" class="header-action-btn highlight" title="Take Capstone Exam">
+        <i class="fa-solid fa-award"></i>
+        <span class="btn-text">Final Exam</span>
+      </button>
+      <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Theme" title="Toggle Theme">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <div class="app-layout">
+    
+    <!-- Sidebar / Drawer: Course Syllabus -->
+    <aside id="syllabus-sidebar" class="syllabus-sidebar">
+      <div class="sidebar-header">
+        <h3><i class="fa-solid fa-book-open"></i> Course Syllabus</h3>
+        <button id="sidebar-close-btn" class="icon-btn small" aria-label="Close Syllabus">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="syllabus-meta-card">
+        <div class="teacher-badge">
+          <div class="teacher-avatar">
+            <i class="fa-solid fa-user-tie"></i>
+          </div>
+          <div class="teacher-info">
+            <div class="teacher-name">Prof. Uday Kumar M</div>
+            <div class="teacher-role">Department of Computer Science</div>
+          </div>
+        </div>
+        <p class="syllabus-summary">Comprehensive curriculum covering computer architecture, number systems, algorithms, compilation pipelines, memory models, and C syntax across Units 1 & 2.</p>
+        <div class="syllabus-stats">
+          <span><i class="fa-solid fa-layer-group"></i> Units 1 & 2</span>
+          <span><i class="fa-solid fa-clock"></i> 11 Modules</span>
+          <span><i class="fa-solid fa-circle-question"></i> 72 MCQs</span>
+          <span><i class="fa-solid fa-file-powerpoint"></i> 162 Slides</span>
+        </div>
+      </div>
+
+      <div class="syllabus-list" id="syllabus-nav-list">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="reset-progress-btn" class="secondary-btn small full-width">
+          <i class="fa-solid fa-arrow-rotate-left"></i> Reset Progress
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <main class="main-content">
+      
+      <!-- Interactive Timeline Ribbon -->
+      <section class="timeline-section" aria-label="Interactive Curriculum Timeline">
+        <div class="timeline-header">
+          <div class="timeline-title-wrap">
+            <span class="timeline-tag"><i class="fa-solid fa-route"></i> CURRICULUM ROADMAP</span>
+            <h2>Units 1 & 2 Learning Journey Timeline</h2>
+          </div>
+          <div class="timeline-controls">
+            <button id="prev-step-btn" class="timeline-nav-btn" aria-label="Previous Milestone" title="Previous Milestone">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span id="timeline-step-indicator" class="step-indicator">Milestone 1 of 11</span>
+            <button id="next-step-btn" class="timeline-nav-btn" aria-label="Next Milestone" title="Next Milestone">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- The Scrollable Timeline Track -->
+        <div class="timeline-scroll-container">
+          <div class="timeline-track-wrapper">
+            <div class="timeline-line">
+              <div id="timeline-progress-line" class="timeline-line-fill"></div>
+            </div>
+            <div class="timeline-nodes" id="timeline-nodes-container">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stage: Active Module Viewport -->
+      <div class="lesson-viewport" id="lesson-viewport">
+        <!-- Injected dynamically based on active module -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Floating Sticky Footer Controls -->
+  <footer class="bottom-action-bar">
+    <div class="action-bar-inner">
+      <button id="footer-prev-btn" class="action-btn prev">
+        <i class="fa-solid fa-arrow-left"></i> Previous Module
+      </button>
+
+      <div class="action-bar-center">
+        <button id="mark-complete-btn" class="action-btn complete">
+          <i class="fa-regular fa-circle-check"></i> <span id="mark-complete-text">Mark as Understood</span>
+        </button>
+        <button id="jump-quiz-btn" class="action-btn quiz-jump">
+          <i class="fa-solid fa-spell-check"></i> Practice Quiz
+        </button>
+      </div>
+
+      <button id="footer-next-btn" class="action-btn next">
+        Next Module <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Tools Lab Modal (Interactive Radix Converter, Memory Layout, Precedence Calculator) -->
+  <div id="tools-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="tools-modal-title">
+    <div class="modal-container large">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-flask-vial"></i>
+          <h2 id="tools-modal-title">Computer Science Interactive Tools Lab</h2>
+        </div>
+        <button class="modal-close-btn" data-close-modal="tools-modal" aria-label="Close Lab">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="converter-tab">
+          <i class="fa-solid fa-calculator"></i> Radix & Bitwise Converter
+        </button>
+        <button class="modal-tab" data-tab="memory-tab">
+          <i class="fa-solid fa-layer-group"></i> Process Memory Inspector
+        </button>
+        <button class="modal-tab" data-tab="precedence-tab">
+          <i class="fa-solid fa-diagram-project"></i> Precedence Evaluator
+        </button>
+        <button class="modal-tab" data-tab="terminal-tab">
+          <i class="fa-solid fa-terminal"></i> GCC C Code Sandbox
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tab 1: Radix Converter -->
+        <div id="converter-tab" class="tab-panel active">
+          <div class="tool-intro">
+            <h3>Interactive Radix & Bitwise Converter</h3>
+            <p>Type in any base to see instantaneous conversions across Decimal, Binary, Octal, and Hexadecimal, along with 4-bit nibble groupings and Two's Complement representation.</p>
+          </div>
+          <div class="converter-grid">
+            <div class="converter-input-group">
+              <label for="calc-dec"><i class="fa-solid fa-hashtag"></i> Decimal (Base 10)</label>
+              <input type="text" id="calc-dec" value="35" placeholder="e.g. 35 or -35">
+            </div>
+            <div class="converter-input-group">
+              <label for="calc-bin"><i class="fa-solid fa-binary"></i> Binary (Base 2)</label>
+              <input type="text" id="calc-bin" value="00100011" placeholder="e.g. 1001001010">
+            </div>
+            <div class="converter-input-group">
+              <label for="calc-hex"><i class="fa-solid fa-cube"></i> Hexadecimal (Base 16)</label>
+              <input type="text" id="calc-hex" value="0x23" placeholder="e.g. 0xA3C5">
+            </div>
+            <div class="converter-input-group">
+              <label for="calc-oct"><i class="fa-solid fa-cubes-stacked"></i> Octal (Base 8)</label>
+              <input type="text" id="calc-oct" value="043" placeholder="e.g. 0527">
+            </div>
+          </div>
+          
+          <div class="bit-breakdown-card">
+            <h4>Bit Grouping & Architecture Diagnostics</h4>
+            <div class="bit-visualizer" id="bit-visualizer-display">
+              <!-- Visual bit blocks rendered here -->
+            </div>
+            <div class="bit-details-grid">
+              <div class="bit-stat">
+                <span class="stat-label">Two's Complement (~N + 1):</span>
+                <span class="stat-value" id="bit-twos-comp">-35</span>
+              </div>
+              <div class="bit-stat">
+                <span class="stat-label">Bitwise NOT (~N):</span>
+                <span class="stat-value" id="bit-not-val">-36 (Notice ~35 = -36!)</span>
+              </div>
+              <div class="bit-stat">
+                <span class="stat-label">Left Shift (N &lt;&lt; 1 = N * 2):</span>
+                <span class="stat-value" id="bit-lshift">70</span>
+              </div>
+              <div class="bit-stat">
+                <span class="stat-label">Right Shift (N &gt;&gt; 1 = N / 2):</span>
+                <span class="stat-value" id="bit-rshift">17</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Process Memory Inspector -->
+        <div id="memory-tab" class="tab-panel">
+          <div class="tool-intro">
+            <h3>Process Virtual Memory Segment Explorer</h3>
+            <p>Click any memory segment to learn its access permissions, lifetime, physical file storage, and where specific C variables are placed.</p>
+          </div>
+          <div class="memory-interactive-container">
+            <div class="memory-diagram-column">
+              <div class="memory-block args-env" data-segment="args">
+                <div class="segment-name">Command-Line Arguments & Environment</div>
+                <div class="segment-addr">High Address (0x7FFF...)</div>
+              </div>
+              <div class="memory-block stack-block" data-segment="stack">
+                <div class="segment-name">Stack Segment (grows &darr; downwards)</div>
+                <div class="segment-desc">Local variables, function stack frames, return addresses</div>
+              </div>
+              <div class="memory-gap">
+                <span>&darr; Stack grows down &bull; Heap grows up &uarr;</span>
+              </div>
+              <div class="memory-block heap-block" data-segment="heap">
+                <div class="segment-name">Heap Segment (grows &uarr; upwards)</div>
+                <div class="segment-desc">Dynamic allocations: malloc(), calloc(), realloc()</div>
+              </div>
+              <div class="memory-block bss-block" data-segment="bss">
+                <div class="segment-name">Uninitialized Data (.bss)</div>
+                <div class="segment-desc">Global & static variables without initialization (zeroed by kernel)</div>
+              </div>
+              <div class="memory-block data-block" data-segment="data">
+                <div class="segment-name">Initialized Data (.data)</div>
+                <div class="segment-desc">Global & static initialized variables (read-write / read-only)</div>
+              </div>
+              <div class="memory-block text-block" data-segment="text">
+                <div class="segment-name">Text / Code Segment</div>
+                <div class="segment-addr">Low Address (0x0040...) &bull; Read-Only Machine Code</div>
+              </div>
+            </div>
+            <div class="memory-details-column">
+              <div id="memory-segment-details" class="segment-details-card">
+                <!-- Injected based on selection -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Precedence Evaluator -->
+        <div id="precedence-tab" class="tab-panel">
+          <div class="tool-intro">
+            <h3>C Operator Precedence & Associativity Visualizer</h3>
+            <p>Analyze how the C compiler parses complex expressions without parentheses. Understand why there is <strong>NO BODMAS</strong> in C!</p>
+          </div>
+          <div class="precedence-playground">
+            <div class="precedence-input-row">
+              <label for="precedence-preset-select">Try classic tricky exam expressions:</label>
+              <select id="precedence-preset-select">
+                <option value="relational">Relational chaining: d = a > b < c (where a=1, b=2, c=3)</option>
+                <option value="arithmetic">Arithmetic: 3 + 4 * 5</option>
+                <option value="shift">Bitwise shift vs Add: x << 2 + 1 (where x=10)</option>
+                <option value="shortcircuit">Short-Circuiting: (a == b) && printf("C")</option>
+                <option value="comma">Comma Operator: a = (1, 2, 3)</option>
+                <option value="bitwise_not">Bitwise NOT: ~35</option>
+              </select>
+            </div>
+            <div id="precedence-explanation-box" class="precedence-explanation-card">
+              <!-- Explanation dynamically loaded -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: GCC Code Sandbox -->
+        <div id="terminal-tab" class="tab-panel">
+          <div class="tool-intro">
+            <h3>Interactive C Sandbox & GCC Terminal Emulator</h3>
+            <p>Inspect verified C programs from the course slides and observe their real GCC terminal outputs and compilation behaviors.</p>
+          </div>
+          <div class="sandbox-container">
+            <div class="sandbox-code-col">
+              <div class="sandbox-toolbar">
+                <select id="sandbox-code-select">
+                  <option value="hello">1. Hello World (Slide 46)</option>
+                  <option value="compilation">2. Compilation 4-Stages Demo</option>
+                  <option value="product">3. Formatted Product I/O (Slide 106)</option>
+                  <option value="relational">4. Relational Chaining (Slide 117)</option>
+                  <option value="escape">5. Octal & Hex Escape Sequences (Slide 94)</option>
+                  <option value="switch">6. Switch Unreachable Trap (Slide 146)</option>
+                  <option value="sum_digits">7. Sum of Digits While Loop (Slide 43)</option>
+                  <option value="printf_ret">8. printf() Return Value (Slide 160)</option>
+                </select>
+                <button id="sandbox-run-btn" class="action-btn"><i class="fa-solid fa-play"></i> Run in GCC</button>
+              </div>
+              <pre class="code-editor-pre"><code id="sandbox-code-display" class="language-c">// Select a code sample above</code></pre>
+            </div>
+            <div class="sandbox-terminal-col">
+              <div class="terminal-window">
+                <div class="terminal-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="terminal-title">bash &mdash; gcc -Wall -Wextra</span>
+                </div>
+                <div class="terminal-body" id="sandbox-terminal-output">
+                  $ gcc program.c -o program<br>
+                  $ ./program<br>
+                  <span class="term-dim">Click "Run in GCC" to execute...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Capstone Final Exam Modal -->
+  <div id="exam-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="exam-modal-title">
+    <div class="modal-container large">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-medal"></i>
+          <h2 id="exam-modal-title">Units 1 & 2 Comprehensive Mastery Exam</h2>
+        </div>
+        <button class="modal-close-btn" data-close-modal="exam-modal" aria-label="Close Exam">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" id="exam-modal-body">
+        <!-- Dynamic Exam Viewport: Intro -> Questions -> Certificate -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Completion Certificate Modal -->
+  <div id="certificate-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-container medium">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-certificate"></i>
+          <h2>Course Completion Certificate</h2>
+        </div>
+        <button class="modal-close-btn" data-close-modal="certificate-modal" aria-label="Close Certificate">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="certificate-canvas-wrapper" class="certificate-wrapper">
+          <!-- Rendered Certificate Preview -->
+        </div>
+        <div class="certificate-actions">
+          <button id="print-cert-btn" class="action-btn"><i class="fa-solid fa-print"></i> Print / Save as PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
