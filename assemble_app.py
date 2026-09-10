@@ -1550,7 +1550,7 @@ window.updateBitwiseLiveCalc = function() {
   const orRes = aVal | bVal;
   const xorRes = aVal ^ bVal;
   const notARes = (~aVal);
-  const shlRes = (aVal << 1) & 0x1FF;
+  const shlRes = aVal << 1;
   const shrRes = aVal >> 1;
 
   container.innerHTML = `
@@ -1597,9 +1597,9 @@ window.updateBitwiseLiveCalc = function() {
     <div class="bw-res-box">
       <div class="bw-res-header">
         <span>Left Shift (A &lt;&lt; 1)</span>
-        <span class="bitwise-sym-pill shift" style="width:24px;height:24px;font-size:0.75rem;">&lt;&lt;</span>
+        <span class="bitwise-sym-pill shift" style="width:auto;min-width:26px;height:24px;padding:0 0.35rem;font-size:0.75rem;">&lt;&lt;</span>
       </div>
-      <div class="bw-res-bin">${toBin(shlRes, 9)}</div>
+      <div class="bw-res-bin">${toBin(shlRes & 0xFF, 8)}</div>
       <div class="bw-res-dec">Decimal: ${shlRes}</div>
       <div style="font-size:0.75rem;color:var(--text-muted);">${aVal} &times; 2 = ${shlRes}</div>
     </div>
@@ -1607,7 +1607,7 @@ window.updateBitwiseLiveCalc = function() {
     <div class="bw-res-box">
       <div class="bw-res-header">
         <span>Right Shift (A &gt;&gt; 1)</span>
-        <span class="bitwise-sym-pill shift" style="width:24px;height:24px;font-size:0.75rem;">&gt;&gt;</span>
+        <span class="bitwise-sym-pill shift" style="width:auto;min-width:26px;height:24px;padding:0 0.35rem;font-size:0.75rem;">&gt;&gt;</span>
       </div>
       <div class="bw-res-bin">${toBin(shrRes)}</div>
       <div class="bw-res-dec">Decimal: ${shrRes}</div>

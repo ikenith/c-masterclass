@@ -116,6 +116,21 @@ html {
   line-height: 1.6;
 }
 
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.45em;
+}
+
+sub {
+  bottom: -0.2em;
+}
+
 body {
   min-height: 100vh;
   overflow-x: hidden;
@@ -3384,9 +3399,45 @@ body {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
+.rule-formula-badge-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.6rem 0;
+  margin-bottom: 1rem;
+}
+
+.rule-formula-badge-wrap .formula-pill {
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-md);
+  letter-spacing: 0.05em;
+}
+
+.rule-formula-badge-wrap .formula-pill.lhs {
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.35);
+}
+
+.rule-formula-badge-wrap .formula-eq {
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.rule-formula-badge-wrap .formula-pill.rhs {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+}
+
 .rule-examples {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 0.65rem;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -3402,6 +3453,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.45rem;
+  white-space: nowrap;
 }
 
 .rule-examples strong {
@@ -3924,7 +3976,15 @@ body {
 .bitwise-sym-pill.or { color: var(--accent-purple); border-color: rgba(168, 85, 247, 0.4); }
 .bitwise-sym-pill.xor { color: var(--accent-amber); border-color: rgba(245, 158, 11, 0.4); }
 .bitwise-sym-pill.not { color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.4); }
-.bitwise-sym-pill.shift { color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.4); }
+.bitwise-sym-pill.shift {
+  color: var(--accent-cyan);
+  border-color: rgba(6, 182, 212, 0.4);
+  width: auto;
+  min-width: 36px;
+  padding: 0 0.55rem;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
 
 .bitwise-grid-columns {
   display: grid;
@@ -4086,9 +4146,21 @@ body {
 
 .bw-results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.85rem;
   margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .bw-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .bw-results-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .bw-res-box {
