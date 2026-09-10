@@ -3270,3 +3270,482 @@ body {
     padding: 0.5rem 0.65rem;
   }
 }
+
+/* ==========================================================================
+   PRECISION SVG FLOWCHARTS & SHAPE REFERENCE GUIDE
+   ========================================================================== */
+.shape-ref-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.shape-ref-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shape-ref-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.shape-ref-svg-wrap {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.shape-ref-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 0.25rem;
+}
+
+.shape-ref-role {
+  font-size: 0.8rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.shape-ref-desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.shape-ref-meta {
+  width: 100%;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.6rem;
+  font-size: 0.78rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.shape-ref-meta code {
+  background: var(--bg-base);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-body);
+}
+
+/* Full Flowchart Showcase Cards */
+.flowchart-showcase {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin: 1.75rem 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.flowchart-showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.75rem;
+}
+
+.flowchart-badge-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.fc-type-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.fc-type-badge.seq { border-color: rgba(59, 130, 246, 0.4); color: var(--accent-blue); }
+.fc-type-badge.branch { border-color: rgba(168, 85, 247, 0.4); color: var(--accent-purple); }
+.fc-type-badge.loop { border-color: rgba(16, 185, 129, 0.4); color: var(--accent-emerald); }
+
+.flowchart-svg-card {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+
+.flowchart-svg-card svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* SVG Text and Shape Styling */
+.svg-node-text {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+  fill: #ffffff;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.svg-sub-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  fill: rgba(255, 255, 255, 0.85);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.svg-label-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  dominant-baseline: middle;
+}
+
+.svg-label-text.true { fill: var(--accent-emerald); }
+.svg-label-text.false { fill: var(--accent-rose); }
+
+/* SVG Flowline Arrow styling */
+.svg-flowline {
+  stroke: var(--text-muted);
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.svg-loopback-line {
+  stroke: var(--accent-cyan);
+  stroke-width: 2.2;
+  stroke-dasharray: 4 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Execution Trace Tables */
+.trace-table-wrap {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+
+.trace-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.trace-table th {
+  background: var(--bg-base);
+  color: var(--text-heading);
+  font-weight: 700;
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  border-bottom: 2px solid var(--border-strong);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.trace-table td {
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-body);
+}
+
+.trace-table tr:last-child td {
+  border-bottom: none;
+}
+
+.trace-table tr.highlight-row {
+  background: rgba(16, 185, 129, 0.08);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   COMPREHENSIVE BITWISE MASTERCLASS & WORKED EXAMPLES
+   ========================================================================== */
+.bitwise-op-showcase {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin: 1.75rem 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.bitwise-op-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.bitwise-op-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bitwise-sym-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  background: var(--bg-base);
+  border: 1px solid var(--border-strong);
+  color: var(--text-heading);
+}
+
+.bitwise-sym-pill.and { color: var(--accent-blue); border-color: rgba(59, 130, 246, 0.4); }
+.bitwise-sym-pill.or { color: var(--accent-purple); border-color: rgba(168, 85, 247, 0.4); }
+.bitwise-sym-pill.xor { color: var(--accent-amber); border-color: rgba(245, 158, 11, 0.4); }
+.bitwise-sym-pill.not { color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.4); }
+.bitwise-sym-pill.shift { color: var(--accent-cyan); border-color: rgba(6, 182, 212, 0.4); }
+
+.bitwise-grid-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 1.25rem 0;
+}
+
+@media (max-width: 860px) {
+  .bitwise-grid-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bitwise-example-card {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bitwise-example-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Monospace Bit Alignment Visualizer Table */
+.bit-align-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin: 0.75rem 0;
+}
+
+.bit-align-table th,
+.bit-align-table td {
+  padding: 0.4rem 0.5rem;
+  text-align: center;
+  border: 1px solid var(--border-subtle);
+}
+
+.bit-align-table th {
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.bit-align-table .row-name {
+  text-align: left;
+  font-weight: 600;
+  padding-left: 0.75rem;
+  color: var(--text-body);
+}
+
+.bit-align-table .bit-cell {
+  width: 28px;
+  font-weight: 700;
+}
+
+.bit-align-table .bit-1 {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-emerald);
+}
+
+.bit-align-table .bit-0 {
+  color: var(--text-muted);
+}
+
+.bit-align-table tr.result-row {
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 2px solid var(--border-strong);
+}
+
+.bit-align-table tr.result-row td {
+  font-weight: 800;
+  color: var(--text-heading);
+}
+
+/* Bitwise Live Playground Widget */
+.bitwise-playground-widget {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: var(--shadow-md);
+}
+
+.bw-calc-controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.bw-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.bw-input-group label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.bw-input {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-heading);
+  outline: none;
+}
+
+.bw-input:focus {
+  border-color: var(--text-heading);
+}
+
+.bw-presets {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.bw-preset-btn {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.bw-preset-btn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-heading);
+  border-color: var(--border-strong);
+}
+
+.bw-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.bw-res-box {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bw-res-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.bw-res-bin {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--accent-cyan);
+}
+
+.bw-res-dec {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-heading);
+}
+

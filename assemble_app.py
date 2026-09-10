@@ -933,6 +933,10 @@ class CourseEngine {
     };
     renderMath();
     setTimeout(renderMath, 150);
+
+    if (window.updateBitwiseLiveCalc) {
+      setTimeout(() => window.updateBitwiseLiveCalc(), 50);
+    }
   }
 
   handleQuizOption(modId, qId, selectedOpt) {
@@ -1376,6 +1380,101 @@ function copySnippet(btn) {
     });
   }
 }
+
+// Bitwise Interactive Visualizer
+window.setBitwisePreset = function(a, b) {
+  const inpA = document.getElementById('bw-op-a');
+  const inpB = document.getElementById('bw-op-b');
+  if (inpA && inpB) {
+    inpA.value = a;
+    inpB.value = b;
+    window.updateBitwiseLiveCalc();
+  }
+};
+
+window.updateBitwiseLiveCalc = function() {
+  const container = document.getElementById('bw-live-results');
+  if (!container) return;
+  const aRaw = parseInt(document.getElementById('bw-op-a')?.value || '0', 10);
+  const bRaw = parseInt(document.getElementById('bw-op-b')?.value || '0', 10);
+  const aVal = isNaN(aRaw) ? 0 : Math.max(0, Math.min(255, aRaw));
+  const bVal = isNaN(bRaw) ? 0 : Math.max(0, Math.min(255, bRaw));
+
+  const toBin = (n, bits = 8) => {
+    let s = (n >>> 0).toString(2);
+    while (s.length < bits) s = '0' + s;
+    return s.slice(-bits);
+  };
+
+  const andRes = aVal & bVal;
+  const orRes = aVal | bVal;
+  const xorRes = aVal ^ bVal;
+  const notARes = (~aVal);
+  const shlRes = (aVal << 1) & 0x1FF;
+  const shrRes = aVal >> 1;
+
+  container.innerHTML = `
+    <div class="bw-res-box">
+      <div class="bw-res-header">
+        <span>Bitwise AND (&)</span>
+        <span class="bitwise-sym-pill and" style="width:24px;height:24px;font-size:0.75rem;">&amp;</span>
+      </div>
+      <div class="bw-res-bin">${toBin(andRes)}</div>
+      <div class="bw-res-dec">Decimal: ${andRes}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);">${aVal} &amp; ${bVal} = ${andRes}</div>
+    </div>
+
+    <div class="bw-res-box">
+      <div class="bw-res-header">
+        <span>Bitwise OR (|)</span>
+        <span class="bitwise-sym-pill or" style="width:24px;height:24px;font-size:0.75rem;">|</span>
+      </div>
+      <div class="bw-res-bin">${toBin(orRes)}</div>
+      <div class="bw-res-dec">Decimal: ${orRes}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);">${aVal} | ${bVal} = ${orRes}</div>
+    </div>
+
+    <div class="bw-res-box">
+      <div class="bw-res-header">
+        <span>Bitwise XOR (^)</span>
+        <span class="bitwise-sym-pill xor" style="width:24px;height:24px;font-size:0.75rem;">^</span>
+      </div>
+      <div class="bw-res-bin">${toBin(xorRes)}</div>
+      <div class="bw-res-dec">Decimal: ${xorRes}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);">${aVal} ^ ${bVal} = ${xorRes}</div>
+    </div>
+
+    <div class="bw-res-box">
+      <div class="bw-res-header">
+        <span>Bitwise NOT (~A)</span>
+        <span class="bitwise-sym-pill not" style="width:24px;height:24px;font-size:0.75rem;">~</span>
+      </div>
+      <div class="bw-res-bin">${toBin(notARes & 0xFF)}</div>
+      <div class="bw-res-dec">Signed: ${notARes}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);">Formula: -(${aVal} + 1) = ${notARes}</div>
+    </div>
+
+    <div class="bw-res-box">
+      <div class="bw-res-header">
+        <span>Left Shift (A &lt;&lt; 1)</span>
+        <span class="bitwise-sym-pill shift" style="width:24px;height:24px;font-size:0.75rem;">&lt;&lt;</span>
+      </div>
+      <div class="bw-res-bin">${toBin(shlRes, 9)}</div>
+      <div class="bw-res-dec">Decimal: ${shlRes}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);">${aVal} &times; 2 = ${shlRes}</div>
+    </div>
+
+    <div class="bw-res-box">
+      <div class="bw-res-header">
+        <span>Right Shift (A &gt;&gt; 1)</span>
+        <span class="bitwise-sym-pill shift" style="width:24px;height:24px;font-size:0.75rem;">&gt;&gt;</span>
+      </div>
+      <div class="bw-res-bin">${toBin(shrRes)}</div>
+      <div class="bw-res-dec">Decimal: ${shrRes}</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);">${aVal} / 2 = ${shrRes}</div>
+    </div>
+  `;
+};
 
 // Boot Engine on DOM Ready
 let engine;
